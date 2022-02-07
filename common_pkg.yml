@@ -12,8 +12,9 @@
               'git',
               'net-tools',
               'sudo',
-              'sshpass'
-              'curl'
+              'sshpass',
+              'curl',
+              'gpg'
       ]
       state: latest
       update_cache: yes
