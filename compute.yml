@@ -1,0 +1,32 @@
+---
+- hosts: compute
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Install docker
+    apt:
+      name: [ 'docker.io' ]
+      update_cache: yes
+      state: latest
+
+  - name: Start docker service
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: Copy daemon configuration file for docker
+    copy:
+      src: template/daemon.json
+      dest: /etc/docker/daemon.json
+    when: ansible_distribution == "Ubuntu" and
+          ansible_distribution_release == "focal"
+    notify:
+      - Docker service
+
+  handlers:
+  - name: Docker service
+    service:
+      name: docker
+      state: restarted
