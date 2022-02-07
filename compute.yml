@@ -18,7 +18,7 @@
 
   - name: Copy daemon configuration file for docker
     copy:
-      src: template/daemon.json
+      src: template/daemon.json.j2
       dest: /etc/docker/daemon.json
     when: ansible_distribution == "Ubuntu" and
           ansible_distribution_release == "focal"
