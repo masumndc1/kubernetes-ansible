@@ -1,6 +1,6 @@
 ---
-# this yml will install some common packages on all 
-# nodes. ie controller and workers
+# this yml will install some common packages 
+# and docker on all nodes(ie controller and workers)
 - hosts: all
   become: yes
   gather_facts: yes
@@ -17,3 +17,30 @@
       state: latest
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
+
+  - name: Install docker
+    apt:
+      name: [ 'docker.io' ]
+      update_cache: yes
+      state: latest
+
+  - name: Start docker service
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: Copy daemon configuration file for docker
+    copy:
+      src: template/daemon.json.j2
+      dest: /etc/docker/daemon.json
+    when: ansible_distribution == "Ubuntu" and
+          ansible_distribution_release == "focal"
+    notify:
+      - Docker service
+
+  handlers:
+  - name: Docker service
+    service:
+      name: docker
+      state: restarted
