@@ -1,0 +1,10 @@
+[all:children]
+controllers
+compute
+
+[controllers]
+controller1
+
+[compute]
+worker1
+
