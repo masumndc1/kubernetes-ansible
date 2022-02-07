@@ -1,0 +1,19 @@
+---
+# this yml will install some common packages on all 
+# nodes. ie controller and workers
+- hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Install some packages
+    apt: 
+      name: [ 'vim',
+              'git',
+              'net-tools',
+              'sudo',
+              'sshpass'
+      ]
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
