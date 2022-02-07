@@ -42,7 +42,7 @@
   - name: Initialization of pod-network is failed
     debug:
       msg: |
-        May be pod-network initialization done. Run 
+        May be pod-network is set up already. Check by running 
         kubeadm init --pod-network-cidr=10.244.0.0/16
     when: 
       - result_outcome.rc != 0 
