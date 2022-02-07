@@ -4,29 +4,47 @@
   gather_facts: yes
 
   tasks:
-  - name: Install docker
+  - name: Add key for kubernetes
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+
+  - name: Add repo for kubernetes
+    apt_repository:
+      repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+      state: present
+
+  - name: Install kubernetes packages
     apt:
-      name: [ 'docker.io' ]
+      name: [ 'kubeadm',
+              'kubelet',
+              'kubectl'
+      ]
       update_cache: yes
       state: latest
 
-  - name: Start docker service
+  - name: Start kubelet service
     service:
-      name: docker
+      name: kubelet
       state: started
       enabled: yes
 
-  - name: Copy daemon configuration file for docker
-    copy:
-      src: template/daemon.json.j2
-      dest: /etc/docker/daemon.json
-    when: ansible_distribution == "Ubuntu" and
-          ansible_distribution_release == "focal"
-    notify:
-      - Docker service
+  - name: Initialize pod-network
+    shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+    register: result_outcome
+    failed_when: 
+      - result_outcome.rc != 0 
+      - '"Some fatal errors occurred:" in result_outcome.stderr'
+    ignore_errors: true
+    no_log: true
+    tags: pod-net
 
-  handlers:
-  - name: Docker service
-    service:
-      name: docker
-      state: restarted
+  - name: Initialization of pod-network is failed
+    debug:
+      msg: |
+        May be pod-network initialization done. Run 
+        kubeadm init --pod-network-cidr=10.244.0.0/16
+    when: 
+      - result_outcome.rc != 0 
+      - '"Some fatal errors occurred:" in result_outcome.stderr'
+    tags: pod-net
