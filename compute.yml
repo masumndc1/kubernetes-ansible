@@ -25,6 +25,31 @@
     notify:
       - Docker service
 
+  - name: Add key for kubernetes
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+
+  - name: Add repo for kubernetes
+    apt_repository:
+      repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+      state: present
+
+  - name: Install kubernetes packages
+    apt:
+      name: [ 'kubeadm',
+              'kubelet',
+              'kubectl'
+      ]
+      update_cache: yes
+      state: latest
+
+  - name: Start kubelet service
+    service:
+      name: kubelet
+      state: started
+      enabled: yes
+
   handlers:
   - name: Docker service
     service:
