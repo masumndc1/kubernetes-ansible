@@ -1,0 +1,5 @@
+---
+- import_playbook: common_pkg.yml
+- import_playbook: controller.yml
+- import_playbook: compute.yml
+
