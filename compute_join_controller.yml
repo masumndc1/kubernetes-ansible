@@ -1,0 +1,19 @@
+---
+- hosts: compute
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Get the token from controller
+    shell: 
+      kubeadm --kubeconfig=/home/masum/.kube/config token create --print-join-command
+    register: join_command
+    delegate_to: controller1
+
+  - name: Join to the controller
+    shell: "{{ join_command.stdout }}"
+    args:
+      creates: /root/yes-i-have-joined.txt
+    delegate_to: worker1
+
+
