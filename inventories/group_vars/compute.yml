@@ -1,0 +1,6 @@
+---
+# token and controller_ip you must need to 
+# change in every new deployment.
+token: "0b9833f172cbc1521014943fc6675082b052b7eaa7c706b540d5d1e328564d82"
+controller_ip: "192.168.20.168"
+controller_port: "6443"
