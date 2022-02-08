@@ -32,6 +32,8 @@
   - name: Initialize pod-network
     shell: kubeadm init --pod-network-cidr=10.244.0.0/16
     register: result_outcome
+    args:
+      creates: /root/pod-network-cidr.txt 
     failed_when: 
       - result_outcome.rc != 0 
       - '"Some fatal errors occurred:" in result_outcome.stderr'
@@ -39,7 +41,7 @@
     no_log: true
     tags: pod-net
 
-  - name: Initialization of pod-network is failed
+  - name: Is Initialization of pod-network failed
     debug:
       msg: |
         May be pod-network is set up already. Check by running 
@@ -48,3 +50,54 @@
       - result_outcome.rc != 0 
       - '"Some fatal errors occurred:" in result_outcome.stderr'
     tags: pod-net
+
+  - name: Set up .kube folder and ownership 
+    file:
+      path: "/home/{{ item }}/.kube"
+      state: directory
+      owner: "{{ item }}"
+      group: "{{ item }}"
+      mode: '0755'
+      recurse: yes
+    with_items: 
+      - "{{ users }}"
+    tags: user
+
+  - name: Copy kube admin.conf to user .kube directory 
+    copy: 
+      src: /etc/kubernetes/admin.conf
+      dest: "/home/{{ item }}/.kube/config"
+      remote_src: yes
+      mode: '0755'
+    with_items: 
+      - "{{ users }}"
+    tags: user
+
+  - name: Deploy pod flannel network
+    shell: |
+      kubectl --kubeconfig=/home/masum/.kube/config \
+      apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+    register: pod_network
+    args:
+      creates: /root/pod-flannel-network.txt
+    failed_when: 
+      - pod_network.rc != 0 
+    ignore_errors: true
+    tags: pod-network
+
+  - name: Test if any pod or nodes running
+    shell: |
+      #kubectl --kubeconfig=/home/masum/.kube/config \
+      #get pods --all-namespaces
+      kubectl --kubeconfig=/home/masum/.kube/config \
+      get nodes --all-namespaces
+    register: pod_running
+    failed_when: 
+      - pod_running.rc != 0 
+    ignore_errors: true
+    tags: test-kube
+
+  - name: Kube controllers are running fine
+    debug:
+      var: pod_running
+    tags: test-kube
