@@ -10,7 +10,7 @@ FROM ubuntu:latest
 ENV TZ=Europe/Helsinki
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt update && apt install -y tzdata openssh-server apache2 supervisor sudo
+RUN apt update && apt install -y tzdata ansible openssh-server apache2 supervisor sudo
 RUN useradd -rm -d /home/masum -s /bin/bash -g root -G sudo -u 1000 masum
 RUN echo 'masum:strongpassword' | chpasswd
 RUN echo "masum ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers.d/10_masum
