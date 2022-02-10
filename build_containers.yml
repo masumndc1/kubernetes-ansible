@@ -1,0 +1,19 @@
+---
+- hosts: controllers
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Run master container
+    docker_container:
+      name: master
+      hostname: master
+      image: ubuntu-ssh:v1.0
+      state: started
+      ports: 
+        - "2222:22/tcp"
+      network_mode: bridge
+      networks_cli_compatible: yes
+      networks:
+        - name: docker_internal_network
+          ipv4_address: "172.18.0.5"
