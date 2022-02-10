@@ -1,0 +1,11 @@
+---
+- hosts: controllers
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Create a secondary network for containers.
+    docker_network:
+      name: docker_internal_network
+      ipam_config:
+        - subnet: 172.18.0.0/16
