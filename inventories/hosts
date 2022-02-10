@@ -7,3 +7,6 @@ controller1
 
 [compute]
 worker1
+
+[all:vars]
+ansible_user=masum

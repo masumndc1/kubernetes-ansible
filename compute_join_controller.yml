@@ -15,5 +15,3 @@
     args:
       creates: /root/yes-i-have-joined.txt
     delegate_to: worker1
-
-
