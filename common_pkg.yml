@@ -14,11 +14,18 @@
               'sudo',
               'sshpass',
               'curl',
-              'gpg'
+              'gpg',
+              'python3-pip'
       ]
       state: latest
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
+
+  - name: Install python modules
+    pip: 
+      name: [ 
+       'docker'
+    ] 
 
   - name: Install docker
     apt:
