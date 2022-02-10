@@ -1,0 +1,45 @@
+---
+- hosts: controllers
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Create build directory
+    file:
+      path: /root/os
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
+
+  - name: Copy all dockerfiles
+    copy: 
+      src: files/os
+      dest: /root/
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: Build an ubuntu image only ssh running in it.
+    docker_image:
+      name: ubuntu-ssh
+      build:
+        dockerfile: /root/os/ubuntu-ssh-only-Dockerfile
+        path: /root/os
+        source: build
+        rm: yes
+      pull: yes
+      state: present
+      tag: v1.0
+
+  - name: Build an ubuntu image multi services running in it.
+    docker_image:
+      name: ubuntu-multiservices
+      build:
+        dockerfile: /root/os/ubuntu-multiservice-Dockerfile
+        path: /root/os
+        source: build
+        rm: yes
+      pull: yes
+      state: present
+      tag: v1.0
