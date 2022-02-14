@@ -1,0 +1,98 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minion1
+  labels: 
+    app: salt-minions
+spec:
+  containers:
+     - name: minion1
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minion2
+  labels: 
+    app: salt-minions
+spec:
+  containers:
+     - name: minion2
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minion3
+  labels: 
+    app: salt-minions
+spec:
+  containers:
+     - name: minion3
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minion4
+  labels: 
+    app: salt-minions
+spec:
+  containers:
+     - name: minion4
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minion5
+  labels: 
+    app: salt-minions
+spec:
+  containers:
+     - name: minion5
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minion6
+  labels: 
+    app: salt-minions
+spec:
+  containers:
+     - name: minion6
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minion7
+  labels: 
+    app: salt-minions
+spec:
+  containers:
+     - name: minion7
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: OnFailure
