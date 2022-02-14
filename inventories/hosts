@@ -1,6 +1,7 @@
 [all:children]
 controllers
 compute
+pods
 
 [controllers]
 controller1
@@ -8,5 +9,9 @@ controller1
 [compute]
 worker1
 
+[pods]
+salt-master ansible_host=192.168.20.168 ansible_port=8022
+
 [all:vars]
 ansible_user=masum
+ansible_python_interpreter=/usr/bin/python3
