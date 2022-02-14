@@ -1,0 +1,39 @@
+---
+- hosts: controller1
+  become: yes
+  #remote_user: masum
+  gather_facts: yes
+
+  tasks:
+  - name: Copy all deployments file
+    copy:
+      src: files/os
+      dest: /root/
+      owner: root
+      group: root
+        #dest: /tmp/
+        #owner: masum 
+        #group: masum
+      mode: '0644'
+
+  - name: Create a k8s namespace
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      name: my-test
+      api_version: v1
+      kind: Namespace
+      state: present 
+
+  - name: Deploy salt-master
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /root/os/salt/salt-master.yml
+
+  - name: Deploy salt-minions
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /root/os/salt/salt-minions.yml
