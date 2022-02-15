@@ -37,3 +37,24 @@
       namespace: default
       state: present
       src: /root/os/salt/salt-minions.yml
+
+  - name: Deploy pupet-master
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /root/os/puppet/puppet-master.yml
+
+  - name: Deploy puppet-nodes
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /root/os/puppet/puppet-nodes.yml
+
+  - name: Deploy jenkins
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /root/os/jenkins/jenkins.yml
