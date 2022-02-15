@@ -2,13 +2,29 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: salt-master
+  name: salt
   labels: 
-    app: salt-master
+    app: salt
 spec:
   containers:
      - image: ubuntu-ssh:v1.0
-       name: salt-master
+       name: salt
        ports:
          - containerPort: 22
-  restartPolicy: OnFailure
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: salt 
+  namespace: default
+  labels:
+    app: salt
+spec:
+  selector:
+    app: salt
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 8022
+    port: 22
