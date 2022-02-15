@@ -1,0 +1,150 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pu-dv1
+  labels: 
+    app: puppet-nodes
+spec:
+  containers:
+     - name: pu-dv1
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pu-dv2
+  labels: 
+    app: puppet-nodes
+spec:
+  containers:
+     - name: pu-dv2
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pu-pr1
+  labels: 
+    app: puppet-nodes
+spec:
+  containers:
+     - name: pu-pr1
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pu-pr2
+  labels: 
+    app: puppet-nodes
+spec:
+  containers:
+     - name: pu-pr2
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pu-pr3
+  labels: 
+    app: puppet-nodes
+spec:
+  containers:
+     - name: pu-pr3
+       image: ubuntu-ssh:v1.0
+       ports:
+         - containerPort: 22
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pu-dv1
+  namespace: default
+  labels:
+    app: pu-dv1
+spec:
+  selector:
+    app: pu-dv1
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 9023
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pu-dv2
+  namespace: default
+  labels:
+    app: pu-dv2
+spec:
+  selector:
+    app: pu-dv2
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 9024
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pu-pr1
+  namespace: default
+  labels:
+    app: pu-pr1
+spec:
+  selector:
+    app: pu-pr1
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 9025
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pu-pr2
+  namespace: default
+  labels:
+    app: pu-pr2
+spec:
+  selector:
+    app: pu-pr2
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 9026
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pu-pr3
+  namespace: default
+  labels:
+    app: pu-pr3
+spec:
+  selector:
+    app: pu-pr3
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 9027
+    port: 22
