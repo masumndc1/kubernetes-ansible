@@ -2,97 +2,209 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: minion1
+  name: sa-dv1
   labels: 
     app: salt-minions
 spec:
   containers:
-     - name: minion1
+     - name: sa-dv1
        image: ubuntu-ssh:v1.0
        ports:
          - containerPort: 22
-  restartPolicy: OnFailure
+  restartPolicy: Always
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: minion2
+  name: sa-dv2
   labels: 
     app: salt-minions
 spec:
   containers:
-     - name: minion2
+     - name: sa-dv2
        image: ubuntu-ssh:v1.0
        ports:
          - containerPort: 22
-  restartPolicy: OnFailure
+  restartPolicy: Always
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: minion3
+  name: sa-pr1
   labels: 
     app: salt-minions
 spec:
   containers:
-     - name: minion3
+     - name: sa-pr1
        image: ubuntu-ssh:v1.0
        ports:
          - containerPort: 22
-  restartPolicy: OnFailure
+  restartPolicy: Always
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: minion4
+  name: sa-pr2
   labels: 
     app: salt-minions
 spec:
   containers:
-     - name: minion4
+     - name: sa-pr2
        image: ubuntu-ssh:v1.0
        ports:
          - containerPort: 22
-  restartPolicy: OnFailure
+  restartPolicy: Always
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: minion5
+  name: sa-pr3
   labels: 
     app: salt-minions
 spec:
   containers:
-     - name: minion5
+     - name: sa-pr3
        image: ubuntu-ssh:v1.0
        ports:
          - containerPort: 22
-  restartPolicy: OnFailure
+  restartPolicy: Always
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: minion6
+  name: sa-pr4
   labels: 
     app: salt-minions
 spec:
   containers:
-     - name: minion6
+     - name: sa-pr4
        image: ubuntu-ssh:v1.0
        ports:
          - containerPort: 22
-  restartPolicy: OnFailure
+  restartPolicy: Always
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: minion7
+  name: sa-pr5
   labels: 
     app: salt-minions
 spec:
   containers:
-     - name: minion7
+     - name: sa-pr5
        image: ubuntu-ssh:v1.0
        ports:
          - containerPort: 22
-  restartPolicy: OnFailure
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-dv1
+  namespace: default
+  labels:
+    app: sa-dv1
+spec:
+  selector:
+    app: sa-dv1
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 8023
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-dv2
+  namespace: default
+  labels:
+    app: sa-dv2
+spec:
+  selector:
+    app: sa-dv2
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 8024
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-pr1
+  namespace: default
+  labels:
+    app: sa-pr1
+spec:
+  selector:
+    app: sa-pr1
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 8025
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-pr2
+  namespace: default
+  labels:
+    app: sa-pr2
+spec:
+  selector:
+    app: sa-pr2
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 8026
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-pr3
+  namespace: default
+  labels:
+    app: sa-pr3
+spec:
+  selector:
+    app: sa-pr3
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 8027
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-pr4
+  namespace: default
+  labels:
+    app: sa-pr4
+spec:
+  selector:
+    app: sa-pr4
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 8028
+    port: 22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-pr5
+  namespace: default
+  labels:
+    app: sa-pr5
+spec:
+  selector:
+    app: sa-pr5
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 8029
+    port: 22
