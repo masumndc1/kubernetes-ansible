@@ -1,0 +1,36 @@
+---
+- hosts: controller1
+  user: "{{ user }}"
+  gather_facts: no
+
+  tasks:
+  - name: expose salt kube services
+    shell: |
+      nohup kubectl port-forward --address "{{ controller_ip }}" salt 8022:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" sa-dv1 8023:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" sa-dv2 8024:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" sa-pr1 8025:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" sa-pr2 8026:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" sa-pr3 8027:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" sa-pr4 8028:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" sa-pr5 8029:22 < /dev/null > /dev/null 2>&1 &
+
+    args:
+      chdir: $HOME
+
+  - name: expose puppet kube services
+    shell: |
+      nohup kubectl port-forward --address "{{ controller_ip }}" puppet 9022:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" pu-dv1 9023:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" pu-dv2 9024:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" pu-pr1 9025:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" pu-pr2 9026:22 < /dev/null > /dev/null 2>&1 &
+      nohup kubectl port-forward --address "{{ controller_ip }}" pu-pr3 9027:22 < /dev/null > /dev/null 2>&1 &
+    args:
+      chdir: $HOME
+
+  - name: expose jenkins kube services
+    shell: |
+      nohup kubectl port-forward --address "{{ controller_ip }}" jenkins 10022:22 < /dev/null > /dev/null 2>&1 &
+    args:
+      chdir: $HOME
