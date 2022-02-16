@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pod-pv
+  labels:
+    type: local 
+spec:
+  storageClassName: localdisk
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/disks
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pod-pvc
+  namespace: default
+spec:
+  storageClassName: localdisk
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
