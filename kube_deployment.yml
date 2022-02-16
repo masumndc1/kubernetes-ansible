@@ -24,6 +24,13 @@
       kind: Namespace
       state: present 
 
+  - name: Create PersistentVolume for pods
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present 
+      src: /root/os/volume/volume.yml
+
   - name: Deploy salt-master
     k8s:
       kubeconfig: /home/masum/.kube/config
