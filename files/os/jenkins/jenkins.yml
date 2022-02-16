@@ -11,7 +11,16 @@ spec:
        name: jenkins
        ports:
          - containerPort: 22
+       volumeMounts:
+         - name: root-disk-jenkins 
+           mountPath: /mnt
+  nodeSelector:
+    kubernetes.io/hostname: "worker1"
   restartPolicy: Always
+  volumes:
+    - name: root-disk-jenkins 
+      persistentVolumeClaim:
+        claimName: pod-pvc
 ---
 apiVersion: v1
 kind: Service
