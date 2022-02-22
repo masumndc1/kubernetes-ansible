@@ -29,8 +29,8 @@
     args:
       chdir: $HOME
 
-  - name: expose jenkins kube services
-    shell: |
-      nohup kubectl port-forward --address "{{ controller_ip }}" jenkins 10022:22 < /dev/null > /dev/null 2>&1 &
-    args:
-      chdir: $HOME
+        #  - name: expose jenkins kube services
+        #    shell: |
+        #      nohup kubectl port-forward --address "{{ controller_ip }}" jenkins 10022:22 < /dev/null > /dev/null 2>&1 &
+        #    args:
+        #      chdir: $HOME
