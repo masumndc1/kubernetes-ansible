@@ -14,7 +14,6 @@
       nohup kubectl port-forward --address "{{ controller_ip }}" sa-pr3 8027:22 < /dev/null > /dev/null 2>&1 &
       nohup kubectl port-forward --address "{{ controller_ip }}" sa-pr4 8028:22 < /dev/null > /dev/null 2>&1 &
       nohup kubectl port-forward --address "{{ controller_ip }}" sa-pr5 8029:22 < /dev/null > /dev/null 2>&1 &
-
     args:
       chdir: $HOME
 
