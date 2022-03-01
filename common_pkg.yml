@@ -16,7 +16,8 @@
               'curl',
               'gpg',
               'python3-apt',
-              'python3-pip'
+              'python3-pip',
+              'apt-transport-https'
       ]
       state: latest
       update_cache: yes
