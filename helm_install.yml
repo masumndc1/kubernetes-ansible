@@ -1,0 +1,20 @@
+---
+# all helms will be installed here
+# currently this playbook is broken. it give a lot
+# of error when run against a controller.
+#
+- hosts: controller1
+  gather_facts: yes
+
+  tasks:
+  - name: Install haproxy helm chart
+    helm:
+      #host: 
+      chart:
+        source:
+          type: git
+          location: https://github.com/haproxytech/helm-charts.git
+      state: present
+      name: haproxytech
+      namespace: default
+
