@@ -28,7 +28,9 @@
       name: [ 
        'docker',
        'kubernetes==11.0.0',
-       'openshift==0.11.0'
+       'openshift==0.11.0',
+       'pyhelm',
+       'kubernetes'
     ] 
 
   - name: Install docker
