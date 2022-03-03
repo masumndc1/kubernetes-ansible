@@ -1,20 +1,30 @@
 ---
 # all helms will be installed here
-# currently this playbook is broken. it give a lot
-# of error when run against a controller.
+# currently first portion does not work. 
+# it give error when run against a controller.
 #
 - hosts: controller1
   gather_facts: yes
 
   tasks:
-  - name: Install haproxy helm chart
-    helm:
-      #host: 
-      chart:
-        source:
-          type: git
-          location: https://github.com/haproxytech/helm-charts.git
-      state: present
-      name: haproxytech
-      namespace: default
+    #  - name: Install haproxy helm chart
+    #     helm:
+    #       #host: 
+    #       chart:
+    #         source:
+    #           type: git
+    #           location: https://github.com/haproxytech/helm-charts.git
+    #       state: present
+    #       name: haproxytech
+    #       namespace: default
 
+   - name: Install haproxy helm chart repo
+     kubernetes.core.helm_repository:
+       name: haproxytech
+       repo_url: "https://haproxytech.github.io/helm-charts"
+       
+   - name: Install haproxy helm chart from remote_url
+     kubernetes.core.helm:
+       name: haproxytech
+       chart_ref: "{{ haproxytech_url }}"
+       release_namespace: default
