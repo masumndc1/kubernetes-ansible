@@ -14,11 +14,23 @@
       repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
       state: present
 
+  - name: Add key for helm
+    apt_key:
+      url: https://baltocdn.com/helm/signing.asc 
+      state: present
+
+  - name: Add repo for helm
+    apt_repository:
+      repo: deb https://baltocdn.com/helm/stable/debian/ all main
+      filename: helm-stable-debian 
+      state: present
+
   - name: Install kubernetes packages
     apt:
       name: [ 'kubeadm',
               'kubelet',
-              'kubectl'
+              'kubectl',
+              'helm'
       ]
       update_cache: yes
       state: latest
