@@ -1,7 +1,6 @@
 ---
-- hosts: controller1
+- hosts: controller
   become: yes
-  #remote_user: masum
   gather_facts: yes
 
   tasks:
@@ -26,6 +25,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/salt/salt-master.yml
+    tags: salt
 
   - name: Deploy sa-dv1 minion
     k8s:
@@ -33,6 +33,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/salt/sa-dv1.yml
+    tags: salt
 
   - name: Deploy sa-dv2 minion
     k8s:
@@ -40,6 +41,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/salt/sa-dv2.yml
+    tags: salt
 
   - name: Deploy sa-dv3 minion
     k8s:
@@ -47,6 +49,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/salt/sa-dv3.yml
+    tags: salt
 
   - name: Deploy sa-pr1 minion
     k8s:
@@ -54,6 +57,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/salt/sa-pr1.yml
+    tags: salt
 
   - name: Deploy sa-pr2 minion
     k8s:
@@ -61,13 +65,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/salt/sa-pr2.yml
-
-  - name: Deploy sa-pr2 minion
-    k8s:
-      kubeconfig: /home/masum/.kube/config
-      namespace: default
-      state: present
-      src: /home/{{ user }}/files/salt/sa-pr2.yml
+    tags: salt
 
   - name: Deploy sa-pr3 minion
     k8s:
@@ -75,6 +73,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/salt/sa-pr3.yml
+    tags: salt
 
   - name: Deploy sa-pr4 minion
     k8s:
@@ -82,6 +81,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/salt/sa-pr4.yml
+    tags: salt
 
   - name: Deploy sa-pr5 minion
     k8s:
@@ -89,6 +89,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/salt/sa-pr5.yml
+    tags: salt
 
   - name: Deploy pupet-master
     k8s:
@@ -96,6 +97,7 @@
       namespace: default
       state: present
       src: /root/os/puppet/puppet-master.yml
+    tags: puppet
 
   - name: Deploy pu-dv1 node
     k8s:
@@ -103,6 +105,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/puppet/pu-dv1.yml
+    tags: puppet
 
   - name: Deploy pu-dv2 node
     k8s:
@@ -110,6 +113,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/puppet/pu-dv2.yml
+    tags: puppet
 
   - name: Deploy pu-pr1 node
     k8s:
@@ -117,6 +121,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/puppet/pu-pr1.yml
+    tags: puppet
 
   - name: Deploy pu-pr2 node
     k8s:
@@ -124,6 +129,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/puppet/pu-pr2.yml
+    tags: puppet
 
   - name: Deploy pu-pr3 node
     k8s:
@@ -131,6 +137,7 @@
       namespace: default
       state: present
       src: /home/{{ user }}/files/puppet/pu-pr3.yml
+    tags: puppet
 
         #  - name: Deploy jenkins
         #    k8s:
