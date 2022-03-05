@@ -1,0 +1,19 @@
+---
+# this will set ingress controller
+- hosts: controller1
+  gather_facts: yes
+
+
+  tasks:
+  - name: Place the value-config file for the ingress controller
+    copy:
+      src: files/os/ingress/haproxytech_value.yaml
+      dest: /home/{{ user }}/haproxytech_value.yaml
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      mode: '0755'
+
+  - name: Set haproxy ingress by heml
+    shell: 
+      cmd: helm install ingress haproxytech/kubernetes-ingress --version 1.19.0 -f /home/{{ user }}/haproxytech_value.yaml
+
