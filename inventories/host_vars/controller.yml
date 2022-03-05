@@ -1,0 +1,4 @@
+---
+user: "masum"
+controller_ip: 192.168.20.168
+haproxytech_url: https://github.com/haproxytech/helm-charts/releases/download/haproxy-1.11.0/haproxy-1.11.0.tgz
