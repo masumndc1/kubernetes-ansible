@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sa-dv3
+  labels: 
+    app: sa-dv3
+spec:
+  containers:
+     - image: ubuntu-ssh:v1.0
+       name: sa-dv3
+       ports:
+         - containerPort: 22
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-dv3 
+  namespace: default
+  labels:
+    app: sa-dv3
+spec:
+  type: ClusterIP
+  selector:
+    app: sa-dv3
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 22
+    port: 2030
+  externalIPs:
+  - "{{ controller_ip }}"

@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: salt
+  labels: 
+    app: salt
+spec:
+  containers:
+     - image: ubuntu-ssh:v1.0
+       name: salt
+       ports:
+         - containerPort: 22
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: salt 
+  namespace: default
+  labels:
+    app: salt
+spec:
+  type: ClusterIP
+  selector:
+    app: salt
+  ports:
+  - name: port-22-tcp
+    protocol: TCP
+    targetPort: 22
+    port: 2022
+  externalIPs:
+  - "{{ controller_ip }}"
