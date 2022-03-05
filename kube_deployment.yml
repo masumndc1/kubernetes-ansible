@@ -5,45 +5,90 @@
   gather_facts: yes
 
   tasks:
-  - name: Copy all deployments file
-    copy:
-      src: files/os
-      dest: /root/
-      owner: root
-      group: root
-        #dest: /tmp/
-        #owner: masum 
-        #group: masum
-      mode: '0644'
-
-  - name: Create a k8s namespace
-    k8s:
-      kubeconfig: /home/masum/.kube/config
-      name: my-test
-      api_version: v1
-      kind: Namespace
-      state: present 
-
-  - name: Create PersistentVolume for pods
-    k8s:
-      kubeconfig: /home/masum/.kube/config
-      namespace: default
-      state: present 
-      src: /root/os/volume/volume.yml
+    #  - name: Create a k8s namespace
+    #    k8s:
+    #      kubeconfig: /home/masum/.kube/config
+    #      name: my-test
+    #      api_version: v1
+    #      kind: Namespace
+    #      state: present 
+    #
+    #  - name: Create PersistentVolume for pods
+    #    k8s:
+    #      kubeconfig: /home/masum/.kube/config
+    #      namespace: default
+    #      state: present 
+    #      src: /home/{{ user }}/files/volume/volume.yml
 
   - name: Deploy salt-master
     k8s:
       kubeconfig: /home/masum/.kube/config
       namespace: default
       state: present
-      src: /root/os/salt/salt-master.yml
+      src: /home/{{ user }}/files/salt/salt-master.yml
 
-  - name: Deploy salt-minions
+  - name: Deploy sa-dv1 minion
     k8s:
       kubeconfig: /home/masum/.kube/config
       namespace: default
       state: present
-      src: /root/os/salt/salt-minions.yml
+      src: /home/{{ user }}/files/salt/sa-dv1.yml
+
+  - name: Deploy sa-dv2 minion
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/salt/sa-dv2.yml
+
+  - name: Deploy sa-dv3 minion
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/salt/sa-dv3.yml
+
+  - name: Deploy sa-pr1 minion
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/salt/sa-pr1.yml
+
+  - name: Deploy sa-pr2 minion
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/salt/sa-pr2.yml
+
+  - name: Deploy sa-pr2 minion
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/salt/sa-pr2.yml
+
+  - name: Deploy sa-pr3 minion
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/salt/sa-pr3.yml
+
+  - name: Deploy sa-pr4 minion
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/salt/sa-pr4.yml
+
+  - name: Deploy sa-pr5 minion
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/salt/sa-pr5.yml
 
   - name: Deploy pupet-master
     k8s:
@@ -52,12 +97,40 @@
       state: present
       src: /root/os/puppet/puppet-master.yml
 
-  - name: Deploy puppet-nodes
+  - name: Deploy pu-dv1 node
     k8s:
       kubeconfig: /home/masum/.kube/config
       namespace: default
       state: present
-      src: /root/os/puppet/puppet-nodes.yml
+      src: /home/{{ user }}/files/puppet/pu-dv1.yml
+
+  - name: Deploy pu-dv2 node
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/puppet/pu-dv2.yml
+
+  - name: Deploy pu-pr1 node
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/puppet/pu-pr1.yml
+
+  - name: Deploy pu-pr2 node
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/puppet/pu-pr2.yml
+
+  - name: Deploy pu-pr3 node
+    k8s:
+      kubeconfig: /home/masum/.kube/config
+      namespace: default
+      state: present
+      src: /home/{{ user }}/files/puppet/pu-pr3.yml
 
         #  - name: Deploy jenkins
         #    k8s:
