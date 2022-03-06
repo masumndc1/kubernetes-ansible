@@ -1,6 +1,6 @@
 ---
 # this will set ingress controller
-- hosts: controller1
+- hosts: controller
   gather_facts: yes
 
 

@@ -4,10 +4,10 @@ compute
 pods
 
 [controllers]
-controller1
+controller
 
 [compute]
-worker1
+worker
 
 [pods]
 pu-dv1

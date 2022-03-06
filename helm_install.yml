@@ -3,7 +3,7 @@
 # currently first portion does not work. 
 # it give error when run against a controller.
 #
-- hosts: controller1
+- hosts: controller
   gather_facts: yes
 
   tasks:
