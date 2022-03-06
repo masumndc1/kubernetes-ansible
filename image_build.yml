@@ -1,31 +1,46 @@
 ---
 - hosts: compute
-  become: yes
   gather_facts: yes
 
-  tasks:
-  - name: Create build directory
-    file:
-      path: /root/os
-      state: directory
-      owner: root
-      group: root
-      mode: '0755'
 
-  - name: Copy all dockerfiles
-    copy: 
-      src: files/os
-      dest: /root/
-      owner: root
-      group: root
+  tasks:
+  - name: Create folder to hold docker related files
+    file:                                                                                                                 
+      path: /home/{{ user }}/files/dockerfiles                                                                               
+      state: directory                                                                                                                  
+      mode: '0755'                                                                                                                      
+      owner: "{{ user }}"                                                                                                            
+      group: "{{ user }}"                                                                                                        
+
+  - name: Place supervisord.conf file                                                                                                   
+    template:                                                                                                                        
+      src: templates/dockerfiles/supervisord.conf.j2                                                                                    
+      dest: /home/{{ user }}/files/dockerfiles/supervisord.conf                                                                         
+      mode: '0644'                                                                                                               
+      owner: "{{ user }}"                                                                                                          
+      group: "{{ user }}"                                                                                                                
+  - name: Place ubuntu-multiservice-Dockerfile file
+    template:
+      src: templates/dockerfiles/ubuntu-multiservice-Dockerfile.j2
+      dest: /home/{{ user }}/files/dockerfiles/ubuntu-multiservice-Dockerfile
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      mode: '0644'
+
+  - name: Place ubuntu-ssh-only-Dockerfile file
+    template:
+      src: templates/dockerfiles/ubuntu-ssh-only-Dockerfile.j2
+      dest: /home/{{ user }}/files/dockerfiles/ubuntu-ssh-only-Dockerfile
+      owner: "{{ user }}"
+      group: "{{ user }}"
       mode: '0644'
 
   - name: Build an ubuntu image only ssh running in it
     docker_image:
       name: ubuntu-ssh
       build:
-        dockerfile: /root/os/dockerfiles/ubuntu-ssh-only-Dockerfile
-        path: /root/os/dockerfiles
+        dockerfile: /home/{{ user }}/files/dockerfiles/ubuntu-ssh-only-Dockerfile
+        path: /home/{{ user }}/files/dockerfiles
         source: build
         rm: yes
       pull: yes
@@ -36,8 +51,8 @@
     docker_image:
       name: ubuntu-multiservices
       build:
-        dockerfile: /root/os/dockerfiles/ubuntu-multiservice-Dockerfile
-        path: /root/os/dockerfiles
+        dockerfile: /home/{{ user }}/files/dockerfiles/ubuntu-multiservice-Dockerfile
+        path: /home/{{ user }}/files/dockerfiles
         source: build
         rm: yes
       pull: yes
