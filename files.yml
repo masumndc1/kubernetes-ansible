@@ -4,38 +4,6 @@
 
   
   tasks:
-  - name: Create folder to hold docker related files
-    file:
-      path: /home/{{ user }}/files/dockerfiles
-      state: directory
-      mode: '0755'
-      owner: "{{ user }}"
-      group: "{{ user }}"
-
-  - name: Place supervisord.conf file
-    template:
-      src: templates/dockerfiles/supervisord.conf.j2
-      dest: /home/{{ user }}/files/dockerfiles/supervisord.conf
-      mode: '0644'
-      owner: "{{ user }}"
-      group: "{{ user }}"
-
-  - name: Place ubuntu-multiservice-Dockerfile file
-    template:
-      src: templates/dockerfiles/ubuntu-multiservice-Dockerfile.j2
-      dest: /home/{{ user }}/files/dockerfiles/ubuntu-multiservice-Dockerfile
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: '0644'
-
-  - name: Place ubuntu-ssh-only-Dockerfile file
-    template:
-      src: templates/dockerfiles/ubuntu-ssh-only-Dockerfile.j2
-      dest: /home/{{ user }}/files/dockerfiles/ubuntu-ssh-only-Dockerfile
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: '0644'
-
   - name: Create folder to hold puppet pod related files
     file:
       path: /home/{{ user }}/files/puppet
@@ -204,3 +172,41 @@
       mode: '0644'
       owner: "{{ user }}"
       group: "{{ user }}"
+
+---
+- hosts: compute
+  gather_facts: yes
+
+
+  tasks:
+  - name: Create folder to hold docker related files
+    file:
+      path: /home/{{ user }}/files/dockerfiles
+      state: directory
+      mode: '0755'
+      owner: "{{ user }}"
+      group: "{{ user }}"
+
+  - name: Place supervisord.conf file
+    template:
+      src: templates/dockerfiles/supervisord.conf.j2
+      dest: /home/{{ user }}/files/dockerfiles/supervisord.conf
+      mode: '0644'
+      owner: "{{ user }}"
+      group: "{{ user }}"
+
+  - name: Place ubuntu-multiservice-Dockerfile file
+    template:
+      src: templates/dockerfiles/ubuntu-multiservice-Dockerfile.j2
+      dest: /home/{{ user }}/files/dockerfiles/ubuntu-multiservice-Dockerfile
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      mode: '0644'
+
+  - name: Place ubuntu-ssh-only-Dockerfile file
+    template:
+      src: templates/dockerfiles/ubuntu-ssh-only-Dockerfile.j2
+      dest: /home/{{ user }}/files/dockerfiles/ubuntu-ssh-only-Dockerfile
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      mode: '0644'
