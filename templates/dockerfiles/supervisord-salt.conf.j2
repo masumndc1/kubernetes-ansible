@@ -1,0 +1,8 @@
+[supervisord]
+nodaemon=true
+
+[program:sshd]
+command=/etc/init.d/ssh start
+
+[program:salt-minion]
+command=/etc/init.d/salt-minion start
