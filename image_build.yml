@@ -26,3 +26,15 @@
       pull: yes
       state: present
       tag: v1.0
+
+  - name: Build an ubuntu image salt-minion running in it
+    docker_image:
+      name: ubuntu-salt-minion
+      build:
+        dockerfile: /home/{{ user }}/files/dockerfiles/ubuntu-salt-minion-Dockerfile
+        path: /home/{{ user }}/files/dockerfiles
+        source: build
+        rm: yes
+      pull: yes
+      state: present
+      tag: v1.0
