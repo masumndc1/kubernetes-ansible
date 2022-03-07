@@ -15,16 +15,12 @@ pu-dv2
 pu-pr1
 pu-pr2
 pu-pr3
-puppet
 sa-dv1
 sa-dv2
 sa-dv3
 sa-pr1
 sa-pr2
 sa-pr3
-sa-pr4
-sa-pr5
-salt
 
 [all:vars]
 ansible_user=masum
