@@ -1,0 +1,30 @@
+# the dockerfile to install openssh-server in ubuntu
+# this dockerfile is copied from 
+# https://stackoverflow.com/questions/40801417/installing-ssh-in-the-docker-containers
+# This image build was stuck due to time zone data (tzdata) missing. 
+# Hack I have found from
+# https://grigorkh.medium.com/fix-tzdata-hangs-docker-image-build-cdb52cc3360d
+
+FROM ubuntu:latest
+
+ENV TZ=Europe/Helsinki
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt update && apt install -y gpg tzdata openssh-server supervisor sudo
+COPY salt-archive-keyring.gpg /usr/share/keyrings/salt-archive-keyring.gpg
+RUN apt-key add /usr/share/keyrings/salt-archive-keyring.gpg
+RUN echo "deb https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest focal main" >> /etc/apt/sources.list.d/salt.list
+RUN apt update && apt install -y salt-minion 
+RUN useradd -rm -d /home/masum -s /bin/bash -g root -G sudo -u 1000 masum
+RUN mkdir /home/masum/.ssh
+RUN echo 'masum:strongpassword' | chpasswd
+RUN echo "masum ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers.d/10_masum
+RUN echo "master: {{ controller_ip }}" >> /etc/salt/minion.d/master.conf
+RUN echo "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAAGTFvBU5Os3XtxxmFPvs0h6d/d/PahqroHWG9PUSUcEPwmUK5effcvPpSdb3nr0ZT9Z8IL0SM5J4kr2XcpTvPPjADQLzsneyb1cp3haEWOEScIcsgt6SgqgcTCF7rerGz2RfRONgqsOgBkxjbkSYldGkCB7AA18VYsh7fIMjUExAEnCw== khuddin@apro13-HKHV2F" >> /home/masum/.ssh/authorized_keys
+RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC80pwZji+QCyXRHxqG+dilz6rOMp7aimARIWPITgXYBdE/fP3Qdfn6fkcjs9FV8yqVXL+zxdc9U4i6FROHGd3SLXepYFu+KwZNObG2nGl9jm5NIUKrP8VY3NDODsq1zpT1gMp6dkqFIbOqVZnd2bfodK05aMoGABt/CWZG9n3HX8iIN4lA4CMnKMawB67fQztNcuVRhPKYmgNwrjHyz7OazdOxs5QtoMXbhwnL9GftZqGwKb2PvyWusiaf1gMVScwzJG2/1Qe82Us4uF7RllvuP8E+7c9TGVY0AIMmrlZatn4ony+lcJGXYJkIIUJFCpDNkhKpHmxSNyeuuOCb2ii5" >> /home/masum/.ssh/authorized_keys
+
+COPY supervisord-salt.conf /etc/supervisor/conf.d/supervisord.conf
+
+EXPOSE 22 
+
+CMD ["/usr/bin/supervisord"]
