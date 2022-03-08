@@ -137,7 +137,7 @@
       owner: "{{ user }}"
       group: "{{ user }}"
 
----
+
 - hosts: compute
   gather_facts: yes
 
@@ -163,14 +163,6 @@
     template:
       src: templates/dockerfiles/supervisord-salt.conf.j2
       dest: /home/{{ user }}/files/dockerfiles/supervisord-salt.conf
-      mode: '0644'
-      owner: "{{ user }}"
-      group: "{{ user }}"
-
-  - name: Place salt-archive-keyring gpg file
-    template:
-      src: templates/dockerfiles/salt-archive-keyring.gpg.j2
-      dest: /home/{{ user }}/files/dockerfiles/salt-archive-keyring.gpg
       mode: '0644'
       owner: "{{ user }}"
       group: "{{ user }}"
