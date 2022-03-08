@@ -10,8 +10,8 @@ FROM ubuntu:latest
 ENV TZ=Europe/Helsinki
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt update && apt install -y gpg tzdata openssh-server supervisor sudo
-COPY salt-archive-keyring.gpg /usr/share/keyrings/salt-archive-keyring.gpg
+RUN apt update && apt install -y curl gpg tzdata openssh-server supervisor sudo
+RUN curl -fsSL -o /usr/share/keyrings/salt-archive-keyring.gpg https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest/salt-archive-keyring.gpg
 RUN apt-key add /usr/share/keyrings/salt-archive-keyring.gpg
 RUN echo "deb https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest focal main" >> /etc/apt/sources.list.d/salt.list
 RUN apt update && apt install -y salt-minion 
