@@ -4,60 +4,6 @@
 
   
   tasks:
-  - name: Create folder to hold puppet pod related files
-    file:
-      path: /home/{{ user }}/files/puppet
-      state: directory
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: '0755'
-    tags: puppet
-    
-  - name: Place pu-dv1 pod files
-    template:
-      src: templates/puppet/pu-dv1.yml.j2
-      dest: /home/{{ user }}/files/puppet/pu-dv1.yml
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: '0644'
-    tags: puppet
-
-  - name: Place pu-dv2 pod files
-    template:
-      src: templates/puppet/pu-dv2.yml.j2
-      dest: /home/{{ user }}/files/puppet/pu-dv2.yml
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: '0644'
-    tags: puppet
-
-  - name: Place pu-pr1 pod files
-    template:
-      src: templates/puppet/pu-pr1.yml.j2
-      dest: /home/{{ user }}/files/puppet/pu-pr1.yml
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: '0644'
-    tags: puppet
-
-  - name: Place pu-pr2 pod files
-    template:
-      src: templates/puppet/pu-pr2.yml.j2
-      dest: /home/{{ user }}/files/puppet/pu-pr2.yml
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: '0644'
-    tags: puppet
-
-  - name: Place pu-pr3 pod files
-    template:
-      src: templates/puppet/pu-pr3.yml.j2
-      dest: /home/{{ user }}/files/puppet/pu-pr3.yml
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: '0644'
-    tags: puppet
-
   - name: Create folder to hold salt pod related files
     file:
       path: /home/{{ user }}/files/salt
@@ -171,14 +117,6 @@
     template:
       src: templates/dockerfiles/ubuntu-multiservice-Dockerfile.j2
       dest: /home/{{ user }}/files/dockerfiles/ubuntu-multiservice-Dockerfile
-      owner: "{{ user }}"
-      group: "{{ user }}"
-      mode: '0644'
-
-  - name: Place ubuntu-ssh-only-Dockerfile file
-    template:
-      src: templates/dockerfiles/ubuntu-ssh-only-Dockerfile.j2
-      dest: /home/{{ user }}/files/dockerfiles/ubuntu-ssh-only-Dockerfile
       owner: "{{ user }}"
       group: "{{ user }}"
       mode: '0644'

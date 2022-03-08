@@ -4,18 +4,6 @@
   gather_facts: yes
 
   tasks:
-  - name: Build an ubuntu image only ssh running in it
-    docker_image:
-      name: ubuntu-ssh
-      build:
-        dockerfile: /home/{{ user }}/files/dockerfiles/ubuntu-ssh-only-Dockerfile
-        path: /home/{{ user }}/files/dockerfiles
-        source: build
-        rm: yes
-      pull: yes
-      state: present
-      tag: v1.0
-
   - name: Build an ubuntu image multi services running in it
     docker_image:
       name: ubuntu-multiservices
