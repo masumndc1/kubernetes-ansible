@@ -10,11 +10,6 @@ controller
 worker
 
 [pods]
-pu-dv1
-pu-dv2
-pu-pr1
-pu-pr2
-pu-pr3
 sa-dv1
 sa-dv2
 sa-dv3
